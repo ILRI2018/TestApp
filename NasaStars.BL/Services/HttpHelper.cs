@@ -27,8 +27,6 @@ namespace NasaStars.BL.Services
             {
                 if (query.StartsWith("/"))
                     query = query.Substring(1);
-
-
             }
 
             return query;

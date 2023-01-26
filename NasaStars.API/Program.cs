@@ -19,6 +19,7 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
+builder.Services.AddScoped<IStarService, StarService>();
 
 var app = builder.Build();
 

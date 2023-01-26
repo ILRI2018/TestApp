@@ -1,4 +1,5 @@
 ﻿using NasaStars.BL.Interfaces;
+using NasaStars.VM;
 
 namespace NasaStars.BL.Services
 {
@@ -11,9 +12,9 @@ namespace NasaStars.BL.Services
             _httpHelper = httpHelper;
         }
 
-        public Task<List<string>> GetStars()
+        public async Task<List<StarVM>> GetStars()
         {
-            var result = _httpHelper.GetAsync<List<string>>("https://data.nasa.gov/resource/y77d-th95.json", null);
+            var result = await _httpHelper.GetAsync<List<StarVM>>("https://data.nasa.gov/resource/y77d-th95.json", null);
 
             return result;
         }

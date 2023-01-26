@@ -1,7 +1,9 @@
-﻿namespace NasaStars.BL.Interfaces
+﻿using NasaStars.VM;
+
+namespace NasaStars.BL.Interfaces
 {
     public interface IStarService
     {
-        Task<List<string>> GetStars();
+        Task<List<StarVM>> GetStars();
     }
 }

@@ -7,16 +7,19 @@ namespace NasaStars.API.Controllers
     [ApiController]
     public class StarController : ControllerBase
     {
-        private readonly IHttpHelper _httpHelper;
-
-        public StarController(IHttpHelper httpHelper)
+        private readonly IStarService _starService;
+        public StarController(IHttpHelper httpHelper, IStarService starService)
         {
-            _httpHelper = httpHelper;
+            _starService = starService;
         }
 
-        public async IActionResult GetStars()
-        {
 
+        [HttpGet("stars")]
+        public async Task<IActionResult> GetStars()
+        {
+            var xxx = await _starService.GetStars();
+
+            return Ok(xxx);
         }
     }
 }
