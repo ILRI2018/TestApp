@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32929.385
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.API", "NasaStars.API.csproj", "{56ADEC87-E6D4-499F-85A9-02A1A0C4E257}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B} = {6F06916A-2EC0-4365-8A1A-F78FC464A97B}
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD} = {8110AFB7-5934-4066-B2F0-C5B23FA278BD}
+		{EC030F89-805D-4BC5-B9AE-922B7641A577} = {EC030F89-805D-4BC5-B9AE-922B7641A577}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{9DFEC88E-D4F7-4144-A378-A3AB2629B8D7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{23D038FC-945D-48D4-99A7-473BDA26EF3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{DF5B0A1C-6009-4FBC-8668-2C83C5DDDAC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.BL", "..\NasaStars.BL\NasaStars.BL.csproj", "{8110AFB7-5934-4066-B2F0-C5B23FA278BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.DAL", "..\NasaStars.DAL\NasaStars.DAL.csproj", "{EC030F89-805D-4BC5-B9AE-922B7641A577}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD} = {8110AFB7-5934-4066-B2F0-C5B23FA278BD}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B4EFB2C7-D91E-4F8F-BFEC-1595B8A22D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.VM", "..\NasaStars.VM\NasaStars.VM.csproj", "{6F06916A-2EC0-4365-8A1A-F78FC464A97B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56ADEC87-E6D4-499F-85A9-02A1A0C4E257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56ADEC87-E6D4-499F-85A9-02A1A0C4E257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56ADEC87-E6D4-499F-85A9-02A1A0C4E257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56ADEC87-E6D4-499F-85A9-02A1A0C4E257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC030F89-805D-4BC5-B9AE-922B7641A577}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC030F89-805D-4BC5-B9AE-922B7641A577}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC030F89-805D-4BC5-B9AE-922B7641A577}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC030F89-805D-4BC5-B9AE-922B7641A577}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{56ADEC87-E6D4-499F-85A9-02A1A0C4E257} = {23D038FC-945D-48D4-99A7-473BDA26EF3B}
+		{8110AFB7-5934-4066-B2F0-C5B23FA278BD} = {9DFEC88E-D4F7-4144-A378-A3AB2629B8D7}
+		{EC030F89-805D-4BC5-B9AE-922B7641A577} = {DF5B0A1C-6009-4FBC-8668-2C83C5DDDAC4}
+		{6F06916A-2EC0-4365-8A1A-F78FC464A97B} = {B4EFB2C7-D91E-4F8F-BFEC-1595B8A22D05}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {25C6A824-C0DC-495B-8052-458E76933780}
+	EndGlobalSection
+EndGlobal
