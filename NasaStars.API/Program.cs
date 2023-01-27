@@ -20,6 +20,16 @@ builder.Services.AddDbContext<NasaStarsContext>(x => x.UseSqlServer(connectionSt
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 
+var mapperConfig = new AutoMapper.MapperConfiguration(mc =>
+{
+    mc.AddProfile(new NasaStars.API.MapperProfile());
+});
+
+AutoMapper.IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(NasaStars.DAL.Repositories.GenericRepository<>));
+
 builder.Services.AddScoped<IHttpHelper, HttpHelper>();
 builder.Services.AddScoped<IStarService, StarService>();
 builder.Services.AddScoped<IUow, Uow>();

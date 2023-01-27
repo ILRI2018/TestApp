@@ -13,7 +13,10 @@ namespace NasaStars.API.Controllers
             _starService = starService;
         }
 
-
+        /// <summary>
+        ///  Get start from nasa site
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("stars")]
         public async Task<IActionResult> GetStars()
         {

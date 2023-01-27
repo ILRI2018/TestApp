@@ -7,11 +7,11 @@ namespace NasaStars.DAL
         public NasaStarsContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Models.Star> Stars { get; set; }
-        //public DbSet<Transaction> Transactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
     }
 }

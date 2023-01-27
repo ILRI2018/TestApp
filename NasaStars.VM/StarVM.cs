@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NasaStars.VM
 {
@@ -13,7 +14,8 @@ namespace NasaStars.VM
         public DateTime Year { get; set; }
         public decimal Reclat { get; set; }
         public decimal Reclong { get; set; }
-        public GeolocationVM Geolocation { get; set; }
+        //[NotMapped]
+        //public GeolocationVM Geolocation { get; set; }
 
         [JsonProperty(":@computed_region_cbhk_fwbd")]
         public int ComputedRegionCbhkFwbd { get; set; }

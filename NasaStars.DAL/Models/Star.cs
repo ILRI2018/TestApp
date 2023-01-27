@@ -1,4 +1,6 @@
-﻿namespace NasaStars.DAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace NasaStars.DAL.Models
 {
     public class Star
     {
@@ -11,6 +13,7 @@
         public DateTime Year { get; set; }
         public decimal Reclat { get; set; }
         public decimal Reclong { get; set; }
+        [NotMapped]
         public Geolocation Geolocation { get; set; }
 
         public int ComputedRegionCbhkFwbd { get; set; }

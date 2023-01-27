@@ -19,9 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.BL", "..\NasaStars.BL\NasaStars.BL.csproj", "{8110AFB7-5934-4066-B2F0-C5B23FA278BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NasaStars.DAL", "..\NasaStars.DAL\NasaStars.DAL.csproj", "{EC030F89-805D-4BC5-B9AE-922B7641A577}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8110AFB7-5934-4066-B2F0-C5B23FA278BD} = {8110AFB7-5934-4066-B2F0-C5B23FA278BD}
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B4EFB2C7-D91E-4F8F-BFEC-1595B8A22D05}"
 EndProject

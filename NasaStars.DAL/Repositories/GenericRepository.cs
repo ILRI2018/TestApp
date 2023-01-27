@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace NasaStars.DAL.Repositories
 {
-    internal class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly NasaStarsContext _context;
         private readonly DbSet<T> _dataSet;

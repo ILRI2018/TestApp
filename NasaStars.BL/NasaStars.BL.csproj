@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NasaStars.DAL\NasaStars.DAL.csproj" />
     <ProjectReference Include="..\NasaStars.VM\NasaStars.VM.csproj" />
   </ItemGroup>
 
