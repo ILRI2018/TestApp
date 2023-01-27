@@ -1,7 +1,11 @@
-﻿namespace NasaStars.DAL.Interfaces
+﻿using NasaStars.DAL.Models;
+
+namespace NasaStars.DAL.Interfaces
 {
-    internal interface IUow
+    public interface IUow: IDisposable
     {
+        public IGenericRepository<Star> StarEntity { get; }
+
         public Task SaveAsync(CancellationToken cancellationToken = default);
     }
 

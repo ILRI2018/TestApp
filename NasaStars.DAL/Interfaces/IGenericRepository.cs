@@ -2,7 +2,7 @@
 
 namespace NasaStars.DAL.Interfaces
 {
-    internal interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         T GetById(Guid id);
         IEnumerable<T> GetAll();
