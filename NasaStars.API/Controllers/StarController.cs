@@ -20,14 +20,10 @@ namespace NasaStars.API.Controllers
         [HttpGet("stars")]
         public async Task<IActionResult> GetStars()
         {
-            var result = await _starService.GetStars();
+            await _starService.RemoveAll();
+            await _starService.GetStarsFromSite();
 
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(result);
+            return Ok();
         }
     }
 }

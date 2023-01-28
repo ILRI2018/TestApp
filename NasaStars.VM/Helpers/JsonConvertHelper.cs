@@ -8,7 +8,7 @@ namespace NasaStars.VM.Helpers
     {
         public static JsonSerializerSettings Default { get; set; }
 
-        static JsonSettings() => Default = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+        static JsonSettings() => Default = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver()};
     }
 
     public static class JsonConvertHelper

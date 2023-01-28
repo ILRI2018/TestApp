@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NasaStars.DAL;
 
@@ -11,9 +12,10 @@ using NasaStars.DAL;
 namespace NasaStars.DAL.Migrations
 {
     [DbContext(typeof(NasaStarsContext))]
-    partial class NasaStarsContextModelSnapshot : ModelSnapshot
+    [Migration("20230128200206_updateFieldsData")]
+    partial class updateFieldsData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,7 +56,7 @@ namespace NasaStars.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Recclass")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Reclat")
                         .HasPrecision(14, 6)
@@ -71,8 +73,6 @@ namespace NasaStars.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Year", "Recclass");
 
                     b.ToTable("Stars");
                 });

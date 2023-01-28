@@ -9,13 +9,12 @@ namespace NasaStars.VM
         public string Name { get; set; }
         public string Nametype { get; set; }
         public string Recclass { get; set; }
-        public string Mass { get; set; }
+        public decimal Mass { get; set; }
         public string Fall { get; set; }
-        public DateTime Year { get; set; }
+        public DateTime? Year { get; set; }
         public decimal Reclat { get; set; }
         public decimal Reclong { get; set; }
-        //[NotMapped]
-        //public GeolocationVM Geolocation { get; set; }
+        public GeolocationVM Geolocation { get; set; }
 
         [JsonProperty(":@computed_region_cbhk_fwbd")]
         public int ComputedRegionCbhkFwbd { get; set; }

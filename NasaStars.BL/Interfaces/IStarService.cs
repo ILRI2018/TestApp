@@ -4,6 +4,7 @@ namespace NasaStars.BL.Interfaces
 {
     public interface IStarService
     {
-        Task<List<StarVM>> GetStars();
+        Task GetStarsFromSite();
+        Task RemoveAll();
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NasaStars.DAL;
 
@@ -11,9 +12,10 @@ using NasaStars.DAL;
 namespace NasaStars.DAL.Migrations
 {
     [DbContext(typeof(NasaStarsContext))]
-    partial class NasaStarsContextModelSnapshot : ModelSnapshot
+    [Migration("20230128145649_updateFields")]
+    partial class updateFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +38,6 @@ namespace NasaStars.DAL.Migrations
                     b.Property<int>("ComputedRegionNnqa")
                         .HasColumnType("int");
 
-                    b.Property<string>("Coordinates")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Fall")
                         .HasPrecision(14, 6)
                         .HasColumnType("nvarchar(max)");
@@ -54,7 +53,7 @@ namespace NasaStars.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Recclass")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Reclat")
                         .HasPrecision(14, 6)
@@ -64,15 +63,10 @@ namespace NasaStars.DAL.Migrations
                         .HasPrecision(14, 6)
                         .HasColumnType("decimal(14,6)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("Year")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Year", "Recclass");
 
                     b.ToTable("Stars");
                 });

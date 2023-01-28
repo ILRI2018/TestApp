@@ -27,7 +27,13 @@ namespace NasaStars.DAL.Repositories
 
         public Task<int> ExecuteQueryRawAsync(string query, IEnumerable<object> parameters, CancellationToken cancellationToken = default)
         {
+
             return _context.Database.ExecuteSqlRawAsync(query, parameters, cancellationToken);
+        }
+
+        public async void BulkInsertAsync(IEnumerable<T> entities)
+        {
+            await _context.BulkInsertAsync(entities);
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
