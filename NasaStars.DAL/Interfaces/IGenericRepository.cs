@@ -12,5 +12,7 @@ namespace NasaStars.DAL.Interfaces
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);
         IQueryable<T> GetQueryable();
+        Task<int> ExecuteQueryRawAsync(string query, IEnumerable<object> parameters, CancellationToken cancellationToken = default);
+
     }
 }

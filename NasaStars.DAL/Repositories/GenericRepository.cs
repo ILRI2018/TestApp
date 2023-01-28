@@ -25,6 +25,11 @@ namespace NasaStars.DAL.Repositories
             _dataSet.AddRange(entities);
         }
 
+        public Task<int> ExecuteQueryRawAsync(string query, IEnumerable<object> parameters, CancellationToken cancellationToken = default)
+        {
+            return _context.Database.ExecuteSqlRawAsync(query, parameters, cancellationToken);
+        }
+
         public IEnumerable<T> Find(Expression<Func<T, bool>> expression)
         {
             return _dataSet.Where(expression);
