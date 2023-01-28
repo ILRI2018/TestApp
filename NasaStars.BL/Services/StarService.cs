@@ -30,17 +30,12 @@ namespace NasaStars.BL.Services
         {
             var result = await _httpHelper.GetAsync<List<StarVM>>("https://data.nasa.gov/resource/y77d-th95.json", null);
             var items = _mapper.Map<List<Star>>(result);
+
             for (int i = 0; i < items.Count; i++)
             {
                 var item = items[i];
-               InsertToDataBase(item);
-            }
-        }
-
-        async private void InsertToDataBase(Star item)
-        {
-            object[] paramItems = new object[]
-               {
+                object[] paramItems = new object[]
+                {
                     new SqlParameter("Id", item.Id),
                     new SqlParameter("Name", item.Name),
                     new SqlParameter("Nametype", item.Nametype),
@@ -57,13 +52,13 @@ namespace NasaStars.BL.Services
                     new SqlParameter("Reclong", item.Reclong),
                     new SqlParameter("ComputedRegionCbhkFwbd", item.ComputedRegionCbhkFwbd),
                     new SqlParameter("ComputedRegionNnqa", item.ComputedRegionNnqa),
-                    new SqlParameter("Type", item.Type),
-                    new SqlParameter("Coordinates", item.Coordinates)
-               };
+                    new SqlParameter("Type", item.Type ?? Convert.DBNull),
+                    new SqlParameter("Coordinates", item.Coordinates ?? Convert.DBNull),
 
-            await _uow.StarEntity.ExecuteQueryRawAsync("INSERT INTO " +
-            "Stars(Id, Name, NameType, Recclass, Mass, Fall, Year, Reclat, Reclong, ComputedRegionCbhkFwbd, ComputedRegionNnqa)" +
-            " VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12})", paramItems);
+                };
+                await _uow.StarEntity.ExecuteQueryRawAsync("INSERT INTO Stars(Id, Name, NameType, Recclass, Mass, Fall, Year, Reclat, Reclong, ComputedRegionCbhkFwbd, ComputedRegionNnqa, Type, Coordinates) " +
+                    "VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}, {12})", paramItems);
+            }
         }
     }
 }
