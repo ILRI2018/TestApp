@@ -28,6 +28,10 @@ namespace NasaStars.API.Controllers
             return Ok();
         }
 
+        /// <summary>
+        ///  Get filter stars
+        /// </summary>
+        /// <returns></returns>
         [HttpPost("get-stars-filter")]
         [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 5)]
         public async Task<IActionResult> GetFilterStars(StarRequestVM starRequestVM)
