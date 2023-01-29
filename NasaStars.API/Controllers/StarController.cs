@@ -29,6 +29,7 @@ namespace NasaStars.API.Controllers
         }
 
         [HttpPost("get-stars-filter")]
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 5)]
         public async Task<IActionResult> GetFilterStars(StarRequestVM starRequestVM)
         {
             var items  = await _starService.GetFilterStars(starRequestVM);
