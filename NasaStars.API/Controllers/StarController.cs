@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NasaStars.BL.Interfaces;
+using NasaStars.VM;
 
 namespace NasaStars.API.Controllers
 {
@@ -17,13 +18,27 @@ namespace NasaStars.API.Controllers
         ///  Get start from nasa site
         /// </summary>
         /// <returns></returns>
-        [HttpGet("stars")]
+        [HttpGet("get-stars-from-site")]
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 10)]
         public async Task<IActionResult> GetStars()
         {
-            await _starService.RemoveAll();
+            await _starService.RemoveAllFromTable();
             await _starService.GetStarsFromSite();
 
             return Ok();
+        }
+
+        [HttpPost("get-stars-filter")]
+        public async Task<IActionResult> GetFilterStars(StarRequestVM starRequestVM)
+        {
+            var items  = await _starService.GetFilterStars(starRequestVM);
+
+            if (items == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
         }
     }
 }

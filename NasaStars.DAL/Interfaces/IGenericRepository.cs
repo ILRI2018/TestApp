@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 
 namespace NasaStars.DAL.Interfaces
 {
@@ -13,7 +14,10 @@ namespace NasaStars.DAL.Interfaces
         void RemoveRange(IEnumerable<T> entities);
         IQueryable<T> GetQueryable();
         Task<int> ExecuteQueryRawAsync(string query, IEnumerable<object> parameters, CancellationToken cancellationToken = default);
-        void BulkInsertAsync(IEnumerable<T> entities);
+        Task<IList<T>> GetAsync(List<Expression<Func<T, bool>>> predicates,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            bool disableTracking = false, bool ignoreQueryFilters = false, CancellationToken cancellationToken = default);
 
     }
 }

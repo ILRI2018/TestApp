@@ -6,6 +6,9 @@ namespace NasaStars.DAL
     {
         public NasaStarsContext()
         {
+            ChangeTracker.LazyLoadingEnabled = false;
+            Database.EnsureDeleted();
+            Database.EnsureCreated();
         }
 
         public NasaStarsContext(DbContextOptions options) : base(options) { }
@@ -14,8 +17,7 @@ namespace NasaStars.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Database.EnsureDeleted();
-            //Database.EnsureCreated();
+            
         }
     }
 }

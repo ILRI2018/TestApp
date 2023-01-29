@@ -4,7 +4,7 @@ using NasaStars.BL.Interfaces;
 using NasaStars.DAL.Models;
 using NasaStars.VM;
 using System.Data;
-using System.Net.Http.Headers;
+using System.Linq.Expressions;
 
 namespace NasaStars.BL.Services
 {
@@ -21,7 +21,7 @@ namespace NasaStars.BL.Services
             _mapper = mapper;
         }
 
-        public async Task RemoveAll()
+        public async Task RemoveAllFromTable()
         {
             await _uow.StarEntity.ExecuteQueryRawAsync("DELETE FROM Stars", new object[1]);
         }
@@ -59,6 +59,49 @@ namespace NasaStars.BL.Services
                 await _uow.StarEntity.ExecuteQueryRawAsync("INSERT INTO Stars(Id, Name, NameType, Recclass, Mass, Fall, Year, Reclat, Reclong, ComputedRegionCbhkFwbd, ComputedRegionNnqa, Type, Coordinates) " +
                     "VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}, {12})", paramItems);
             }
+        }
+
+        public async Task<StarResultVM> GetFilterStars(StarRequestVM starRequestVM)
+        {
+            //starRequestVM.From = new DateTime(2000, 1, 1);
+            //starRequestVM.To = new DateTime(2002, 1, 1);
+
+            starRequestVM.Name = null;
+            starRequestVM.From = null;
+            starRequestVM.To = null;
+            starRequestVM.Reclass = "L5";
+
+            var resultVM = new StarResultVM();
+            var predicates = GetPredicates(starRequestVM);
+
+            var itemStars = (await _uow.StarEntity.GetAsync(predicates, x => x.OrderByDescending(x => x.Year))).ToList();
+
+            foreach (var itemStar in itemStars.GroupBy(x => x.Year).OrderByDescending(x => x.Key))
+            {
+                var groupItems = itemStar.Select(x => x).ToList();
+                resultVM.TotalSumPointsMonths.Add(itemStar.Key)
+            }
+
+            return null;
+        }
+
+        private List<Expression<Func<Star, bool>>> GetPredicates(StarRequestVM starRequestVM)
+        {
+            List<Expression<Func<Star, bool>>> predicates = new List<Expression<Func<Star, bool>>>();
+
+            if (starRequestVM.From.HasValue && starRequestVM.To.HasValue)
+            {
+                predicates.Add(x => x.Year.Value.Year >= starRequestVM.From.Value.Year && x.Year.Value.Year <= starRequestVM.To.Value.Year);
+            }
+            if (!string.IsNullOrEmpty(starRequestVM.Reclass))
+            {
+                predicates.Add(x => x.Recclass == starRequestVM.Reclass);
+            }
+            if (!string.IsNullOrEmpty(starRequestVM.Name))
+            {
+                predicates.Add(x => x.Name.Contains(starRequestVM.Name));
+            }
+            return predicates;
         }
     }
 }
