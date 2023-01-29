@@ -63,26 +63,30 @@ namespace NasaStars.BL.Services
 
         public async Task<StarResultVM> GetFilterStars(StarRequestVM starRequestVM)
         {
-            //starRequestVM.From = new DateTime(2000, 1, 1);
-            //starRequestVM.To = new DateTime(2002, 1, 1);
+            starRequestVM.From = new DateTime(2000, 1, 1);
+            starRequestVM.To = new DateTime(2002, 1, 1);
 
             starRequestVM.Name = null;
-            starRequestVM.From = null;
-            starRequestVM.To = null;
-            starRequestVM.Reclass = "L5";
+            starRequestVM.Reclass = null;
+            //starRequestVM.To = null;
+            //starRequestVM.Reclass = "L5";
 
             var resultVM = new StarResultVM();
             var predicates = GetPredicates(starRequestVM);
 
             var itemStars = (await _uow.StarEntity.GetAsync(predicates, x => x.OrderByDescending(x => x.Year))).ToList();
 
-            foreach (var itemStar in itemStars.GroupBy(x => x.Year).OrderByDescending(x => x.Key))
+            foreach (var itemStarGroup in itemStars.GroupBy(x => x.Year).OrderBy(x => x.Key))
             {
-                var groupItems = itemStar.Select(x => x).ToList();
-                resultVM.TotalSumPointsMonths.Add(itemStar.Key)
+                var group = new StarGroupVM {
+                        Year = itemStarGroup.Key.Value.Year,
+                        TotalCount = itemStarGroup.Select(x => x).Count(),
+                        TotalSumMass = (int)itemStarGroup.Sum(x => x.Mass),
+                    };
+                resultVM.GroupByYearStars.Add(itemStarGroup.Key.Value.Year, group);
             }
 
-            return null;
+            return resultVM;
         }
 
         private List<Expression<Func<Star, bool>>> GetPredicates(StarRequestVM starRequestVM)
