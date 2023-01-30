@@ -45,5 +45,21 @@ namespace NasaStars.API.Controllers
 
             return Ok(items);
         }
+
+        /// <summary>
+        ///  Get years
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("get-years")]
+        //[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 300)]
+        public async Task<IActionResult> GetYears()
+        {
+            var years = await _starService.GetYears();
+            if (years == null)
+            {
+                return NotFound();
+            }
+            return Ok(new YearResultVM { Years = years});
+        }
     }
 }

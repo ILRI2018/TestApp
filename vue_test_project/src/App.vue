@@ -1,9 +1,7 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
   <FilterModule msg="Welcome to Your Vue.js App"/>
-  <div style="margin-top:50px;">
-    <GridModule/>
-  </div>
+  <GridModule/>
 </template>
 
 <script>

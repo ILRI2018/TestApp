@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using NasaStars.BL.Interfaces;
 using NasaStars.DAL.Models;
 using NasaStars.VM;
@@ -24,6 +25,12 @@ namespace NasaStars.BL.Services
         public async Task RemoveAllFromTable()
         {
             await _uow.StarEntity.ExecuteQueryRawAsync("DELETE FROM Stars", new object[1]);
+        }
+
+        public async Task<List<int>> GetYears()
+        {
+            var listYears = await _uow.StarEntity.GetQueryable().Where(x => x.Year != null).Select(y => y.Year.Value.Year).Distinct().Skip(2).ToListAsync();
+            return listYears;
         }
 
         public async Task GetStarsFromSite()
@@ -63,8 +70,8 @@ namespace NasaStars.BL.Services
 
         public async Task<StarResultVM> GetFilterStars(StarRequestVM starRequestVM)
         {
-            starRequestVM.From = new DateTime(2000, 1, 1);
-            starRequestVM.To = new DateTime(2002, 1, 1);
+            starRequestVM.From = 2000;
+            starRequestVM.To = 2002;
 
             starRequestVM.Name = null;
             starRequestVM.Reclass = null;
@@ -95,7 +102,7 @@ namespace NasaStars.BL.Services
 
             if (starRequestVM.From.HasValue && starRequestVM.To.HasValue)
             {
-                predicates.Add(x => x.Year.Value.Year >= starRequestVM.From.Value.Year && x.Year.Value.Year <= starRequestVM.To.Value.Year);
+                predicates.Add(x => x.Year.Value.Year >= starRequestVM.From.Value && x.Year.Value.Year <= starRequestVM.To.Value);
             }
             if (!string.IsNullOrEmpty(starRequestVM.Reclass))
             {

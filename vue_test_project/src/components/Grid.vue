@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <table class="table">
+    <table class="table mt-5">
   <thead>
     <tr>
       <th scope="col">#</th>
