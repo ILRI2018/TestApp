@@ -29,69 +29,48 @@ namespace NasaStars.BL.Services
 
         public async Task<List<int>> GetYears()
         {
-            var listYears = await _uow.StarEntity.GetQueryable().Where(x => x.Year != null).Select(y => y.Year.Value.Year).Distinct().Skip(2).ToListAsync();
+            var listYears = await _uow.StarEntity.GetQueryable().Where(x => x.Year != null).Select(y => y.Year.Value.Year).Distinct().ToListAsync();
             return listYears;
+        }
+
+        public async Task<List<string>> GetClasses()
+        {
+            var listClasses = await _uow.StarEntity.GetQueryable().Where(x => x.Year != null).Select(y => y.Recclass).Distinct().ToListAsync();
+            return listClasses;
         }
 
         public async Task GetStarsFromSite()
         {
             var result = await _httpHelper.GetAsync<List<StarVM>>("https://data.nasa.gov/resource/y77d-th95.json", null);
+
             var items = _mapper.Map<List<Star>>(result);
 
-            for (int i = 0; i < items.Count; i++)
-            {
-                var item = items[i];
-                object[] paramItems = new object[]
-                {
-                    new SqlParameter("Id", item.Id),
-                    new SqlParameter("Name", item.Name),
-                    new SqlParameter("Nametype", item.Nametype),
-                    new SqlParameter("Recclass", item.Recclass),
-                    new SqlParameter("Mass", item.Mass),
-                    new SqlParameter("Fall", item.Fall),
-                    new SqlParameter
-                    {
-                        ParameterName = "Year",
-                        Value =  item.Year ?? Convert.DBNull,
-                        SqlDbType = SqlDbType.DateTime2,
-                    },
-                    new SqlParameter("Reclat", item.Reclat),
-                    new SqlParameter("Reclong", item.Reclong),
-                    new SqlParameter("ComputedRegionCbhkFwbd", item.ComputedRegionCbhkFwbd),
-                    new SqlParameter("ComputedRegionNnqa", item.ComputedRegionNnqa),
-                    new SqlParameter("Type", item.Type ?? Convert.DBNull),
-                    new SqlParameter("Coordinates", item.Coordinates ?? Convert.DBNull),
-
-                };
-                await _uow.StarEntity.ExecuteQueryRawAsync("INSERT INTO Stars(Id, Name, NameType, Recclass, Mass, Fall, Year, Reclat, Reclong, ComputedRegionCbhkFwbd, ComputedRegionNnqa, Type, Coordinates) " +
-                    "VALUES ({0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11}, {12})", paramItems);
-            }
+           _uow.StarEntity.AddRange(items);
+           await _uow.SaveAsync();
         }
 
         public async Task<StarResultVM> GetFilterStars(StarRequestVM starRequestVM)
         {
-            starRequestVM.From = 2000;
-            starRequestVM.To = 2002;
-
-            starRequestVM.Name = null;
-            starRequestVM.Reclass = null;
-            //starRequestVM.To = null;
-            //starRequestVM.Reclass = "L5";
-
             var resultVM = new StarResultVM();
             var predicates = GetPredicates(starRequestVM);
 
             var itemStars = (await _uow.StarEntity.GetAsync(predicates, x => x.OrderByDescending(x => x.Year))).ToList();
 
-            foreach (var itemStarGroup in itemStars.GroupBy(x => x.Year).OrderBy(x => x.Key))
+            int idGroup = 0;
+            foreach (var itemStarGroup in itemStars.Where(x => x.Year != null).GroupBy(x => x.Year).OrderBy(x => x.Key))
             {
-                var group = new StarGroupVM {
-                        Year = itemStarGroup.Key.Value.Year,
-                        TotalCount = itemStarGroup.Select(x => x).Count(),
-                        TotalSumMass = (int)itemStarGroup.Sum(x => x.Mass),
-                    };
+                var group = new StarGroupVM
+                {
+                    Id = ++idGroup,
+                    Year = itemStarGroup.Key.Value.Year,
+                    TotalCount = itemStarGroup.Select(x => x).Count(),
+                    TotalSumMass = itemStarGroup.Sum(x => x.Mass),
+                };
                 resultVM.GroupByYearStars.Add(itemStarGroup.Key.Value.Year, group);
+                resultVM.StarGroupVMs.Add(group);
             }
+            resultVM.TotalMass = resultVM.GroupByYearStars.Select(x => x.Value).Sum(x => x.TotalSumMass);
+            resultVM.Total = resultVM.GroupByYearStars.Select(x => x.Value).Sum(x => x.TotalCount);
 
             return resultVM;
         }
@@ -110,7 +89,7 @@ namespace NasaStars.BL.Services
             }
             if (!string.IsNullOrEmpty(starRequestVM.Name))
             {
-                predicates.Add(x => x.Name.Contains(starRequestVM.Name));
+                predicates.Add(x => x.Name.ToLower().Contains(starRequestVM.Name.ToLower()));
             }
             return predicates;
         }

@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ContractResolver = new DefaultContractResolver();
-    options.SerializerSettings.MetadataPropertyHandling = new Newtonsoft.Json.MetadataPropertyHandling();
 });
 
 builder.Services.AddCors(options =>
@@ -64,7 +63,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseCors();
 
 app.MapControllers();
+
 
 app.Run();

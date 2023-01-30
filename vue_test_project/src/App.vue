@@ -1,20 +1,17 @@
 <template>
   <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <FilterModule msg="Welcome to Your Vue.js App"/>
-  <GridModule/>
+  <FilterModule/>
 </template>
 
 <script>
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import FilterModule from './components/Filter.vue'
-import GridModule from './components/Grid.vue'
 
 export default {
   name: 'App',
   components: {
     FilterModule,
-    GridModule
   }
 }
 </script>

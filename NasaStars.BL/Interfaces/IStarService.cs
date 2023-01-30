@@ -8,5 +8,6 @@ namespace NasaStars.BL.Interfaces
         Task RemoveAllFromTable();
         Task<StarResultVM> GetFilterStars(StarRequestVM starRequestVM);
         Task<List<int>> GetYears();
+        Task<List<string>> GetClasses();
     }
 }

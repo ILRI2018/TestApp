@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using NasaStars.BL.Interfaces;
 using NasaStars.VM;
 
@@ -6,6 +7,7 @@ namespace NasaStars.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAll")]
     public class StarController : ControllerBase
     {
         private readonly IStarService _starService;
@@ -23,7 +25,15 @@ namespace NasaStars.API.Controllers
         public async Task<IActionResult> GetStars()
         {
             await _starService.RemoveAllFromTable();
-            await _starService.GetStarsFromSite();
+
+            try
+            {
+                await _starService.GetStarsFromSite();
+            }
+            catch
+            {
+                return BadRequest("error retrieving data");
+            }
 
             return Ok();
         }
@@ -51,7 +61,7 @@ namespace NasaStars.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("get-years")]
-        //[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 300)]
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 300)]
         public async Task<IActionResult> GetYears()
         {
             var years = await _starService.GetYears();
@@ -59,7 +69,23 @@ namespace NasaStars.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(new YearResultVM { Years = years});
+            return Ok(new YearResultVM { Years = years });
+        }
+
+        /// <summary>
+        ///  Get classes
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("get-classes")]
+        [ResponseCache(Location = ResponseCacheLocation.Client, Duration = 300)]
+        public async Task<IActionResult> GetClasses()
+        {
+            var classes = await _starService.GetClasses();
+            if (classes == null)
+            {
+                return NotFound();
+            }
+            return Ok(new ClassResultVM { Classes = classes });
         }
     }
 }
