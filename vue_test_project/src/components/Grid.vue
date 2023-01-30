@@ -36,11 +36,6 @@
 export default {
     name: 'GridModule',
     props: ['itemsLength', 'years', 'total', 'totalMass'],
-    data() {
-        return {
-            items: this.years
-        }
-    },
 }
 
 </script>
